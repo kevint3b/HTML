@@ -8,6 +8,83 @@
 
 </head>
 <body>
-    
+    <header>
+        <nav class="nav">
+            <ul class="nav__list">
+                <li class="nav__item"><a href="#home" class="nav__link active">Inicio</a></li>
+                <li class="nav__item"><a href="#about" class="nav__link">Sobre mí</a></li>
+                <li class="nav__item"><a href="#projects" class="nav__link">Proyectos</a></li>
+                <li class="nav__item"><a href="#contact" class="nav__link">Contacto</a></li>
+            </ul>
+            <span class="nav__indicator"></span>
+        </nav>
+    </header>
+
+    <main class="main">
+        <section id="home" class="panel active"> 
+            <h1>Inicio</h1>
+            <p>Bienvenido a mi sitio.</p>
+        </section>
+        <section id="about" class="panel"> 
+            <h1>Sobre mí</h1>
+            <p>Algo sobre mi experiencia.</p>
+        </section>
+        <section id="projects" class="panel"> 
+            <h1>Proyectos</h1>
+            <p>Ejemplos de trabajo.</p>
+        </section>
+        <section id="contact" class="panel"> 
+            <h1>Contacto</h1>
+            <p>Formulario o correo.</p>
+        </section>
+    </main>
+
+    <script>
+    // Navegación animada: mover indicador y mostrar panel con animación
+    document.addEventListener('DOMContentLoaded', function(){
+        const links = document.querySelectorAll('.nav__link');
+        const indicator = document.querySelector('.nav__indicator');
+        const panels = document.querySelectorAll('.panel');
+
+        function updateIndicator(el){
+            const rect = el.getBoundingClientRect();
+            const parentRect = el.closest('.nav').getBoundingClientRect();
+            indicator.style.width = rect.width + 'px';
+            indicator.style.transform = `translateX(${rect.left - parentRect.left}px)`;
+        }
+
+        // Inicializar indicador en el elemento activo
+        const initial = document.querySelector('.nav__link.active');
+        if(initial) updateIndicator(initial);
+
+        links.forEach(link => {
+            link.addEventListener('click', function(e){
+                e.preventDefault();
+                // toggle active class on links
+                links.forEach(l=>l.classList.remove('active'));
+                this.classList.add('active');
+
+                // move indicator with a small timeout to allow layout
+                updateIndicator(this);
+
+                // show corresponding panel with animation
+                const target = this.getAttribute('href').slice(1);
+                panels.forEach(p => {
+                    if(p.id === target){
+                        p.classList.add('active');
+                    } else {
+                        p.classList.remove('active');
+                    }
+                });
+            });
+        });
+
+        // Reposicionar indicador en resize
+        window.addEventListener('resize', ()=>{
+            const active = document.querySelector('.nav__link.active');
+            if(active) updateIndicator(active);
+        });
+    });
+    </script>
 </body>
 </html>
