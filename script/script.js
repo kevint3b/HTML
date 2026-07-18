@@ -3,7 +3,7 @@
     document.addEventListener('DOMContentLoaded', function(){
         const links = document.querySelectorAll('.nav__link');
         const indicator = document.querySelector('.nav__indicator');
-        const panels = document.querySelectorAll('.panel');
+        //const panels = document.querySelectorAll('.panel');
 
         function updateIndicator(el){
             const rect = el.getBoundingClientRect();
@@ -15,7 +15,7 @@
         // Inicializar indicador en el elemento activo
         const initial = document.querySelector('.nav__link.active');
         if(initial) updateIndicator(initial);
-
+//aqui hay un error de usuabiliad
         links.forEach(link => {
             link.addEventListener('click', function(e){
                 e.preventDefault();
